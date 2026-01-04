@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fetch Könyvek</title>
+  <style>
+    body {
+      color: blue;
+      font-family: Georgia, "Times New Roman", Times, serif;
+      background-color: bisque;
+      font-size: 20px;
+    }
+    h1 {
+      font-style: italic;
+      text-align: center;
+    }
+    #mainDiv {
+      margin: 0 auto;
+      border: 5px ridge blue;
+      width: 50%;
+      padding: 10px;
+    }
+    #mainDiv p {
+      text-align: center;
+      border: 2px ridge black;
+      width: 35%;
+      margin: 5px auto;
+    }
+  </style>
+</head>
+<body>
+
+<div id="mainDiv">
+    <h1>Könyv adatai</h1>   
+    Könyv ID-je:<input id="num" type="number" min="1" placeholder="ID">
+    <button onclick="FetchBook()">Betöltés</button>
+    <div id="book"></div>
+</div>
+
+<script>
+function FetchBook() {
+    const number = document.getElementById("num").value;
+
+    if (!number) {
+        alert("Adj meg egy könyv ID-t!");
+        return;
+    }
+
+    fetch("https://surveys-5jvt.onrender.com/api/books/" + number)
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        return response.json();
+    })
+    .then((book) => {
+        console.log(book); // Konzolra írás
+
+        const bookDiv = document.getElementById("book");
+
+        bookDiv.innerHTML = `
+        <h2>Cím: ${book.title}</h2>
+        <p><strong>ID:</strong> ${book.id}</p>
+        <p><strong>Szerző:</strong> ${book.author}</p>
+        <p><strong>Megjelenés éve:</strong> ${book.year}</p>`;
+    })
+    .catch((error) => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+}
+</script>
+
+</body>
+</html>
