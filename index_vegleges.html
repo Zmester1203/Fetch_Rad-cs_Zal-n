@@ -33,7 +33,7 @@
 
 <div id="mainDiv">
     <h1>Könyv adatai</h1>   
-    Könyv ID-je:<input id="num" type="number" min="1" placeholder="ID">
+    Könyv ID-je:<input id="num" type="number" min="1" max="9" placeholder="ID">
     <button onclick="FetchBook()">Betöltés</button>
     <div id="book"></div>
 </div>
@@ -55,7 +55,7 @@ function FetchBook() {
         return response.json();
     })
     .then((book) => {
-        console.log(book); // Konzolra írás
+        console.log(book); 
 
         const bookDiv = document.getElementById("book");
 
